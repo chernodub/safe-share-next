@@ -2,7 +2,8 @@
   "overrides": [
     {
       "extends": [
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "@chernodub/eslint-config"
       ],
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {

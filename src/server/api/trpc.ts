@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable import/order */
+/* eslint-disable jsdoc/check-tag-names */
+/* eslint-disable jsdoc/require-param */
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1)
@@ -16,15 +20,15 @@
  * processing a request
  *
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+import { type Session } from 'next-auth';
 
-import { getServerAuthSession } from "../auth";
-import { prisma } from "../db";
+import { getServerAuthSession } from '../auth';
+import { prisma } from '../db';
 
-type CreateContextOptions = {
+interface CreateContextOptions {
   session: Session | null;
-};
+}
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use
@@ -35,19 +39,17 @@ type CreateContextOptions = {
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
-  return {
+const createInnerTRPCContext = (opts: CreateContextOptions) => ({
     session: opts.session,
     prisma,
-  };
-};
+});
 
 /**
  * This is the actual context you'll use in your router. It will be used to
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+export const createTRPCContext = async(opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
   // Get the session from the server using the unstable_getServerSession wrapper function
@@ -64,8 +66,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
+import { initTRPC, TRPCError } from '@trpc/server';
+import superjson from 'superjson';
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
@@ -102,7 +104,7 @@ export const publicProcedure = t.procedure;
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
   return next({
     ctx: {
@@ -118,7 +120,6 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * If you want a query or mutation to ONLY be accessible to logged in users, use
  * this. It verifies the session is valid and guarantees ctx.session.user is not
  * null
- *
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
