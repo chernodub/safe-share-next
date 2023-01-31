@@ -1,0 +1,27 @@
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+
+import { api } from '../utils/api';
+
+import { MessagesTable } from './MessagesTable';
+
+export function SharedItems() {
+  const messages = api.message.getAll.useQuery();
+
+  return (
+    <Tabs isFitted w='full'>
+      <TabList>
+        <Tab>Messages</Tab>
+        <Tab>Files</Tab>
+      </TabList>
+
+      <TabPanels>
+        <TabPanel>
+          <MessagesTable resources={messages.data ?? []} />
+        </TabPanel>
+        <TabPanel>
+          TODO
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  );
+}
