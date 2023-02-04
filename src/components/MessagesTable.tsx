@@ -1,9 +1,8 @@
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-
-import type { ShareableMessage } from '../types/message';
+import type { Message } from '@prisma/client';
 
 interface MessagesTableProps {
-  readonly resources: readonly ShareableMessage[];
+  readonly resources: readonly Message[];
 }
 
 export function MessagesTable({ resources }: MessagesTableProps) {
@@ -21,13 +20,14 @@ export function MessagesTable({ resources }: MessagesTableProps) {
           </Tr>
         </Thead>
         <Tbody>
+          {resources.length === 0 && <p>No messages sent yet</p>}
           {resources.map(resource => (
             <Tr key={resource.id}>
               <Td>
-                {resource.name}
+                {resource.createdAt.toUTCString()}
               </Td>
               <Td>
-                {resource.status}
+                {resource.id}
               </Td>
             </Tr>
           ))}

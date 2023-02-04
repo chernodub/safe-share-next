@@ -5,7 +5,10 @@ import { api } from '../utils/api';
 import { MessagesTable } from './MessagesTable';
 
 export function SharedItems() {
-  const messages = api.message.getAll.useQuery();
+  const messages = api.message.getPage.useQuery({
+    page: 0,
+    pageSize: 10,
+  });
 
   return (
     <Tabs isFitted w='full'>
