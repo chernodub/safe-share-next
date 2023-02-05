@@ -17,8 +17,73 @@ function mapPageInputPrismaQuery(input: { page: number; pageSize: number; }): { 
   };
 }
 
+const DELETE_MESSAGE_INPUT_SCHEME = z.object({
+  id: z.string(),
+});
+const MESSAGE_SCHEME = z.object({
+  content: z.string(),
+});
 export const messageRouter = createTRPCRouter({
   getPage: protectedProcedure
     .input(PAGE_SCHEMA)
-    .query(({ input }) => prisma.message.findMany(mapPageInputPrismaQuery(input))),
+    .query(({ input, ctx: { session } }) => prisma.message.findMany({
+      ...mapPageInputPrismaQuery(input),
+      where: {
+        authorId: session.user.id,
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    })),
+  create: protectedProcedure
+    .input(MESSAGE_SCHEME)
+    .mutation(({ input, ctx: { session } }) =>
+      prisma.message.create({
+          data: {
+            text: input.content,
+            author: {
+              connect: {
+                id: session.user.id,
+              },
+            },
+        },
+      })),
+  edit: protectedProcedure
+    .input(MESSAGE_SCHEME.extend({
+      id: z.string(),
+    }))
+    .mutation(async ({ input, ctx: { session } }) => {
+        await prisma.message.findFirstOrThrow({
+          where: {
+            id: input.id,
+            authorId: session.user.id,
+          },
+        });
+
+        await prisma.message.update({
+          data: {
+            text: input.content,
+          },
+          where: {
+            id: input.id,
+          },
+        });
+      }),
+  delete: protectedProcedure
+    .input(DELETE_MESSAGE_INPUT_SCHEME)
+    .mutation(async ({ input, ctx: { session } }) => {
+        await prisma.message.findFirstOrThrow({
+          where: {
+            id: input.id,
+            authorId: session.user.id,
+          },
+        });
+
+        return prisma.message.delete({
+          where: {
+            id: input.id,
+          },
+        });
+      }),
+
 });
