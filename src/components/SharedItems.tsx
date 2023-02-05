@@ -19,7 +19,7 @@ export function SharedItems() {
 
       <TabPanels>
         <TabPanel>
-          <MessagesTable resources={messages.data ?? []} />
+          <MessagesTable messages={messages.data ?? []} />
         </TabPanel>
         <TabPanel>
           TODO
