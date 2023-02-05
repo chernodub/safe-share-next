@@ -12,6 +12,18 @@ const handleSignInClick = () => {
   void signIn();
 };
 
+function HeaderLayout({ children }: PropsWithChildren) {
+  return (
+    <header>
+      <Flex py={2} px={6} justifyContent="space-between" alignItems="center">
+        <h1>SafeShare</h1>
+
+        {children}
+      </Flex>
+    </header>
+  );
+}
+
 export function Header() {
   const session = useSession();
 
@@ -28,19 +40,7 @@ export function Header() {
 
   return (
     <HeaderLayout>
-      <Button variant='outline' onClick={handleSignInClick}>Sign In</Button>
+      <Button variant="outline" onClick={handleSignInClick}>Sign In</Button>
     </HeaderLayout>
-  );
-}
-
-function HeaderLayout({ children }: PropsWithChildren) {
-  return (
-    <header>
-      <Flex py={2} px={6} justifyContent='space-between' alignItems='center'>
-        <h1>SafeShare</h1>
-
-        {children}
-      </Flex>
-    </header>
   );
 }

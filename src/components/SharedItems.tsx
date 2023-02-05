@@ -11,7 +11,7 @@ export function SharedItems() {
   });
 
   return (
-    <Tabs isFitted w='full'>
+    <Tabs isFitted w="full">
       <TabList>
         <Tab>Messages</Tab>
         <Tab>Files</Tab>

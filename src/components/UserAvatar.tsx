@@ -6,5 +6,5 @@ interface UserAvatarProps {
 }
 
 export function UserAvatar({ imageSrc, onClick }: UserAvatarProps) {
-  return <Avatar size='sm' src={imageSrc ?? undefined} onClick={onClick} />;
+  return <Avatar size="sm" src={imageSrc ?? undefined} onClick={onClick} />;
 }
