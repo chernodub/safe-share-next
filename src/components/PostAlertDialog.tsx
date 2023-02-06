@@ -29,7 +29,7 @@ export function PostAlertDialog({ post, isOpen, onClose, onEdit, onDelete }: Pos
         <AlertDialogContent>
           <AlertDialogCloseButton />
           <AlertDialogHeader>
-            <Date value={post.createdAt} />
+            <Date value={post.updatedAt} />
           </AlertDialogHeader>
 
           <AlertDialogBody>

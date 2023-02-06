@@ -27,7 +27,7 @@ export function EditPostModal({ isOpen, onClose, post }: EditPostModalProps) {
     onSuccess() {
       loadingToast.closeAll();
       successToast({
-        title: <>Post from <Date value={post.createdAt} /> was updated!</>,
+        title: <>Post from <Date value={post.updatedAt} /> was updated!</>,
       });
       void utils.post.getPage.invalidate();
     },
@@ -48,7 +48,7 @@ export function EditPostModal({ isOpen, onClose, post }: EditPostModalProps) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          Edit Post from <Date value={post.createdAt}/>
+          Edit Post from <Date value={post.updatedAt}/>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>

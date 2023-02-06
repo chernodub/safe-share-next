@@ -27,7 +27,7 @@ function useDeleteMutation() {
     onSuccess(removedPost) {
       loadingToast.closeAll();
       successToast({
-        title: <>Post from <Date value={removedPost.createdAt} /> was removed!</>,
+        title: <>Post from <Date value={removedPost.updatedAt} /> was removed!</>,
       });
       void utils.post.getPage.invalidate();
     },
@@ -96,7 +96,7 @@ function PostItems({ posts, onClick }: PostRowsProps) {
     <>
       {posts.map(post => (
         <PostItem key={post.id} onClick={() => onClick(post)}>
-          <Date value={post.createdAt} />
+          <Date value={post.updatedAt} />
         </PostItem>
       ))}
     </>
