@@ -1,6 +1,8 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { Button, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import type { Message } from '@prisma/client';
 import { useCallback, useId } from 'react';
+
+import { MdSave } from 'react-icons/md';
 
 import { api } from '../utils/api';
 
@@ -53,7 +55,13 @@ export function EditMessageModal({ isOpen, onClose, message }: EditMessageModalP
           <MessageForm formId={formId} defaultValue={{ content: message.text }} onSubmit={handleSubmit}></MessageForm>
         </ModalBody>
         <ModalFooter>
-          <Button isLoading={isLoading} colorScheme="blue" mr={3} form={formId} type="submit">
+          <Button
+            leftIcon={<Icon as={MdSave} />}
+            isLoading={isLoading}
+            colorScheme="blue"
+            mr={3}
+            form={formId}
+            type="submit">
             Save
           </Button>
         </ModalFooter>

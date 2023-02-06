@@ -1,5 +1,7 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { Button, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { useCallback, useId } from 'react';
+
+import { MdAdd } from 'react-icons/md';
 
 import { api } from '../utils/api';
 
@@ -45,7 +47,13 @@ export function CreateMessageModal({ isOpen, onClose }: CreateMessageModalProps)
           <MessageForm formId={formId} onSubmit={handleSubmit} defaultValue={{ content: '' }}></MessageForm>
         </ModalBody>
         <ModalFooter>
-          <Button isLoading={isLoading} colorScheme="blue" mr={3} form={formId} type="submit">
+          <Button
+            leftIcon={<Icon as={MdAdd} />}
+            isLoading={isLoading}
+            colorScheme="blue"
+            mr={3}
+            form={formId}
+            type="submit">
             Add
           </Button>
         </ModalFooter>

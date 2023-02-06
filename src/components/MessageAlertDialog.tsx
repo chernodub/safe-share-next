@@ -1,6 +1,7 @@
-import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button } from '@chakra-ui/react';
+import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Icon } from '@chakra-ui/react';
 import type { Message } from '@prisma/client';
 import { useCallback, useRef } from 'react';
+import { MdDelete, MdEdit } from 'react-icons/md';
 
 import { Date } from './shared/Date';
 
@@ -35,12 +36,19 @@ export function MessageAlertDialog({ message, isOpen, onClose, onEdit, onDelete 
             {message.text}
           </AlertDialogBody>
 
-          <AlertDialogFooter>
-            <Button colorScheme="blue" ref={ref} onClick={handleEdit}>
-              Edit
-            </Button>
-            <Button colorScheme="red" onClick={handleDelete} ml={3}>
+          <AlertDialogFooter gap={3}>
+            <Button
+              colorScheme="red"
+              leftIcon={<Icon as={MdDelete}/>}
+              onClick={handleDelete}>
               Delete
+            </Button>
+            <Button
+              leftIcon={<Icon as={MdEdit}/>}
+              colorScheme="blue"
+              ref={ref}
+              onClick={handleEdit}>
+              Edit
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
