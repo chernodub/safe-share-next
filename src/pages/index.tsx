@@ -3,9 +3,8 @@ import { signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
 
 import { Header } from '../components/Header';
+import { MessagesList } from '../components/MessagesList';
 import { PageLayout } from '../components/PageLayout';
-
-import { SharedItems } from '../components/SharedItems';
 
 const Home: NextPage = () => {
   const session = useSession();
@@ -30,7 +29,7 @@ const Home: NextPage = () => {
       <Header/>
 
       <PageLayout>
-        <SharedItems />
+        <MessagesList />
       </PageLayout>
     </>
   );

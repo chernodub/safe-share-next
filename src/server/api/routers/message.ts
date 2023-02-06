@@ -26,19 +26,24 @@ const MESSAGE_SCHEME = z.object({
 export const messageRouter = createTRPCRouter({
   getPage: protectedProcedure
     .input(PAGE_SCHEMA)
-    .query(({ input, ctx: { session } }) => prisma.message.findMany({
-      ...mapPageInputPrismaQuery(input),
-      where: {
-        authorId: session.user.id,
-      },
-      orderBy: {
-        updatedAt: 'desc',
-      },
-    })),
+    .query(async ({ input, ctx: { session } }) => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return prisma.message.findMany({
+        ...mapPageInputPrismaQuery(input),
+        where: {
+          authorId: session.user.id,
+        },
+        orderBy: {
+          updatedAt: 'desc',
+        },
+      });
+    }),
   create: protectedProcedure
     .input(MESSAGE_SCHEME)
-    .mutation(({ input, ctx: { session } }) =>
-      prisma.message.create({
+    .mutation(async ({ input, ctx: { session } }) => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+        return prisma.message.create({
           data: {
             text: input.content,
             author: {
@@ -46,13 +51,16 @@ export const messageRouter = createTRPCRouter({
                 id: session.user.id,
               },
             },
-        },
-      })),
+          },
+        });
+      }),
   edit: protectedProcedure
     .input(MESSAGE_SCHEME.extend({
       id: z.string(),
     }))
     .mutation(async ({ input, ctx: { session } }) => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
         await prisma.message.findFirstOrThrow({
           where: {
             id: input.id,
@@ -72,6 +80,8 @@ export const messageRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(DELETE_MESSAGE_INPUT_SCHEME)
     .mutation(async ({ input, ctx: { session } }) => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
         await prisma.message.findFirstOrThrow({
           where: {
             id: input.id,
