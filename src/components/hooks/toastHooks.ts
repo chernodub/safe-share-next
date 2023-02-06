@@ -1,11 +1,12 @@
 import type { UseToastOptions } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 
-export function useLoadingToast() {
+export function useLoadingToast(options: UseToastOptions = {}) {
   return useToast({
     status: 'loading',
     position: 'bottom',
     duration: null,
+    ...options,
   });
 }
 
