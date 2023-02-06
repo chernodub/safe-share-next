@@ -1,16 +1,17 @@
 import { FormControl, FormLabel, Textarea } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 
-export interface MessageFormValue {
+export interface PostFormValue {
   readonly content: string;
 }
-interface MessageFormProps {
+
+interface PostFormProps {
   readonly formId: string;
-  readonly defaultValue: MessageFormValue;
-  readonly onSubmit: (data: MessageFormValue) => void;
+  readonly defaultValue: PostFormValue;
+  readonly onSubmit: (data: PostFormValue) => void;
 }
 
-export function MessageForm({ defaultValue, onSubmit, formId }: MessageFormProps) {
+export function PostForm({ defaultValue, onSubmit, formId }: PostFormProps) {
   const { handleSubmit, register } = useForm({
     defaultValues: defaultValue,
   });
@@ -18,7 +19,7 @@ export function MessageForm({ defaultValue, onSubmit, formId }: MessageFormProps
   return (
     <form onSubmit={handleSubmit(onSubmit)} id={formId}>
       <FormControl>
-        <FormLabel>Message</FormLabel>
+        <FormLabel>Post Content</FormLabel>
         <Textarea {...register('content', { required: true })} />
       </FormControl>
     </form>

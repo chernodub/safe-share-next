@@ -17,10 +17,10 @@ function mapPageInputPrismaQuery(input: { page: number; pageSize: number; }): { 
   };
 }
 
-const DELETE_MESSAGE_INPUT_SCHEME = z.object({
+const DELETE_POST_INPUT_SCHEME = z.object({
   id: z.string(),
 });
-const MESSAGE_SCHEME = z.object({
+const POST_SCHEME = z.object({
   content: z.string(),
 });
 export const postRouter = createTRPCRouter({
@@ -36,7 +36,7 @@ export const postRouter = createTRPCRouter({
       },
     })),
   create: protectedProcedure
-    .input(MESSAGE_SCHEME)
+    .input(POST_SCHEME)
     .mutation(({ input, ctx: { session } }) =>
       prisma.post.create({
           data: {
@@ -49,7 +49,7 @@ export const postRouter = createTRPCRouter({
         },
       })),
   edit: protectedProcedure
-    .input(MESSAGE_SCHEME.extend({
+    .input(POST_SCHEME.extend({
       id: z.string(),
     }))
     .mutation(async ({ input, ctx: { session } }) => {
@@ -70,7 +70,7 @@ export const postRouter = createTRPCRouter({
         });
       }),
   delete: protectedProcedure
-    .input(DELETE_MESSAGE_INPUT_SCHEME)
+    .input(DELETE_POST_INPUT_SCHEME)
     .mutation(async ({ input, ctx: { session } }) => {
         await prisma.post.findFirstOrThrow({
           where: {

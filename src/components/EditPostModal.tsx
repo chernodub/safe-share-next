@@ -6,19 +6,19 @@ import { MdSave } from 'react-icons/md';
 
 import { api } from '../utils/api';
 
-import type { MessageFormValue } from './MessageFormValue';
-import { MessageForm } from './MessageFormValue';
+import type { PostFormValue } from './PostForm';
+import { PostForm } from './PostForm';
 
-import { Date } from './shared/Date';
 import { useLoadingToast, useSuccessToast } from './hooks/toastHooks';
+import { Date } from './shared/Date';
 
-interface EditMessageModalProps {
-  readonly message: Post;
+interface EditPostModalProps {
+  readonly post: Post;
   readonly isOpen: boolean;
   readonly onClose: () => void;
 }
 
-export function EditMessageModal({ isOpen, onClose, message }: EditMessageModalProps) {
+export function EditPostModal({ isOpen, onClose, post }: EditPostModalProps) {
   const loadingToast = useLoadingToast();
   const successToast = useSuccessToast();
   const formId = useId();
@@ -27,32 +27,32 @@ export function EditMessageModal({ isOpen, onClose, message }: EditMessageModalP
     onSuccess() {
       loadingToast.closeAll();
       successToast({
-        title: <>Message from <Date value={message.createdAt} /> was updated!</>,
+        title: <>Post from <Date value={post.createdAt} /> was updated!</>,
       });
       void utils.post.getPage.invalidate();
     },
     onMutate: () => loadingToast(),
   });
 
-  const handleSubmit = useCallback((data: MessageFormValue) => {
+  const handleSubmit = useCallback((data: PostFormValue) => {
     mutate({
-      id: message.id,
+      id: post.id,
       content: data.content,
     });
 
     onClose();
-  }, [mutate, message.id, onClose]);
+  }, [mutate, post.id, onClose]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          Edit Message from <Date value={message.createdAt}/>
+          Edit Post from <Date value={post.createdAt}/>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <MessageForm formId={formId} defaultValue={{ content: message.text }} onSubmit={handleSubmit}></MessageForm>
+          <PostForm formId={formId} defaultValue={{ content: post.text }} onSubmit={handleSubmit}></PostForm>
         </ModalBody>
         <ModalFooter>
           <Button

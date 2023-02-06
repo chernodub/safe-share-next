@@ -3,7 +3,7 @@ import { signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
 
 import { Header } from '../components/Header';
-import { MessagesList } from '../components/MessagesList';
+import { PostsList } from '../components/PostsList';
 import { PageLayout } from '../components/PageLayout';
 
 const Home: NextPage = () => {
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       <Header/>
 
       <PageLayout>
-        <MessagesList />
+        <PostsList />
       </PageLayout>
     </>
   );

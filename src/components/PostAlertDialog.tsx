@@ -5,14 +5,14 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 
 import { Date } from './shared/Date';
 
-interface MessageAlertDialogProps {
-  readonly message: Post;
+interface PostAlertDialogProps {
+  readonly post: Post;
   readonly isOpen: boolean;
   readonly onClose: () => void;
   readonly onEdit: () => void;
   readonly onDelete: () => void;
 }
-export function MessageAlertDialog({ message, isOpen, onClose, onEdit, onDelete }: MessageAlertDialogProps) {
+export function PostAlertDialog({ post, isOpen, onClose, onEdit, onDelete }: PostAlertDialogProps) {
   const ref = useRef(null);
 
   const handleEdit = useCallback(() => {
@@ -29,11 +29,11 @@ export function MessageAlertDialog({ message, isOpen, onClose, onEdit, onDelete 
         <AlertDialogContent>
           <AlertDialogCloseButton />
           <AlertDialogHeader>
-            <Date value={message.createdAt} />
+            <Date value={post.createdAt} />
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            {message.text}
+            {post.text}
           </AlertDialogBody>
 
           <AlertDialogFooter gap={3}>

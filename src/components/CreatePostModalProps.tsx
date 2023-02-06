@@ -5,18 +5,18 @@ import { MdAdd } from 'react-icons/md';
 
 import { api } from '../utils/api';
 
-import type { MessageFormValue } from './MessageFormValue';
-import { MessageForm } from './MessageFormValue';
+import type { PostFormValue } from './PostForm';
+import { PostForm } from './PostForm';
 import { useLoadingToast, useSuccessToast } from './hooks/toastHooks';
 
-interface CreateMessageModalProps {
+interface CreatePostModalProps {
   readonly isOpen: boolean;
   readonly onClose: () => void;
 }
 
-export function CreateMessageModal({ isOpen, onClose }: CreateMessageModalProps) {
+export function CreatePostModal({ isOpen, onClose }: CreatePostModalProps) {
   const loadingToast = useLoadingToast();
-  const successToast = useSuccessToast({ title: 'Message created!' });
+  const successToast = useSuccessToast({ title: 'Post created!' });
   const utils = api.useContext();
   const formId = useId();
   const { mutate, isLoading } = api.post.create.useMutation({
@@ -28,7 +28,7 @@ export function CreateMessageModal({ isOpen, onClose }: CreateMessageModalProps)
     onMutate: () => loadingToast(),
   });
 
-  const handleSubmit = useCallback((data: MessageFormValue) => {
+  const handleSubmit = useCallback((data: PostFormValue) => {
     mutate({
       content: data.content,
     });
@@ -40,11 +40,11 @@ export function CreateMessageModal({ isOpen, onClose }: CreateMessageModalProps)
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          Add New Message
+          Add New Post
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <MessageForm formId={formId} onSubmit={handleSubmit} defaultValue={{ content: '' }}></MessageForm>
+          <PostForm formId={formId} onSubmit={handleSubmit} defaultValue={{ content: '' }}></PostForm>
         </ModalBody>
         <ModalFooter>
           <Button
