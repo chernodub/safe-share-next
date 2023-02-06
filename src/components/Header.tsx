@@ -2,6 +2,8 @@ import { Button, Flex } from '@chakra-ui/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import type { PropsWithChildren } from 'react';
 
+import { ThemeToggle } from './ThemeToggle';
+
 import { UserAvatar } from './UserAvatar';
 
 const handleAvatarClick = () => {
@@ -18,7 +20,10 @@ function HeaderLayout({ children }: PropsWithChildren) {
       <Flex py={2} px={6} justifyContent="space-between" alignItems="center">
         <h1>SafeShare</h1>
 
-        {children}
+        <Flex alignItems="center" gap={2}>
+          <ThemeToggle />
+          {children}
+        </Flex>
       </Flex>
     </header>
   );
@@ -30,10 +35,16 @@ export function Header() {
   if (session.status === 'authenticated' && session.data.user) {
     return (
       <HeaderLayout>
-        <UserAvatar
-          imageSrc={session.data.user.image ?? undefined}
+        <Button
           onClick={handleAvatarClick}
-        />
+          variant="ghost"
+          borderRadius="full"
+          p={0}
+        >
+          <UserAvatar
+            imageSrc={session.data.user.image ?? undefined}
+          />
+        </Button>
       </HeaderLayout>
     );
   }
