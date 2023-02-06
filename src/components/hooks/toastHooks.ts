@@ -6,6 +6,7 @@ export function useLoadingToast(options: UseToastOptions = {}) {
     status: 'loading',
     position: 'bottom',
     duration: null,
+    title: 'Loading...',
     ...options,
   });
 }
