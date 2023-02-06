@@ -111,11 +111,10 @@ function MessageItemsSkeleton() {
   const SKELETON_ITEMS_AMOUNT = 10;
   return (
     <>
-      {Array(SKELETON_ITEMS_AMOUNT).fill(
-        <MessageItem>
+      {Array(SKELETON_ITEMS_AMOUNT).map((_, i) =>
+        <MessageItem key={i}>
           <SkeletonText noOfLines={1} w="full" />
-        </MessageItem>,
-      )}
+        </MessageItem>)}
     </>
   );
 }
