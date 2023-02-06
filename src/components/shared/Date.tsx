@@ -3,5 +3,9 @@ interface DateProps {
 }
 
 export function Date({ value: date }: DateProps) {
-  return <>{date.toTimeString()}</>;
+  return (
+    <>
+      {date.toLocaleDateString()}, {date.toLocaleTimeString(undefined, { timeStyle: 'short' })}
+    </>
+  );
 }
