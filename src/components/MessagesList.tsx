@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 import { useCallback, useState } from 'react';
 import { MdAdd } from 'react-icons/md';
 
-import type { Message as MessageModel } from '@prisma/client';
+import type { Post } from '@prisma/client';
 
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
@@ -23,13 +23,13 @@ function useDeleteMutation() {
   const loadingToast = useLoadingToast();
   const successToast = useSuccessToast();
 
-  return api.message.delete.useMutation({
+  return api.post.delete.useMutation({
     onSuccess(removedMessage) {
       loadingToast.closeAll();
       successToast({
         title: <>Message from <Date value={removedMessage.createdAt} /> was removed!</>,
       });
-      void utils.message.getPage.invalidate();
+      void utils.post.getPage.invalidate();
     },
     onMutate: () => loadingToast(),
   }).mutate;
@@ -37,12 +37,12 @@ function useDeleteMutation() {
 
 export function MessagesList() {
   const [animatedElement] = useAutoAnimate();
-  const { data: messages } = api.message.getPage.useQuery({ page: 0, pageSize: 10 });
+  const { data: messages } = api.post.getPage.useQuery({ page: 0, pageSize: 10 });
   const [selectedMessageId, setCurrentMessageId] = useState<string | null>(null);
   const selectedMessage = messages?.find(message => message.id === selectedMessageId) ?? null;
   const createModal = useDisclosure();
   const editModal = useDisclosure();
-  const handleMessageClick = useCallback(({ id }: MessageModel) => setCurrentMessageId(id), []);
+  const handleMessageClick = useCallback(({ id }: Post) => setCurrentMessageId(id), []);
   const deleteMessage = useDeleteMutation();
   const handleDelete = useCallback(() => {
     if (selectedMessage == null) {
@@ -87,8 +87,8 @@ export function MessagesList() {
 }
 
 interface MessageRowsProps {
-  readonly messages: MessageModel[];
-  readonly onClick: (message: MessageModel) => void;
+  readonly messages: Post[];
+  readonly onClick: (message: Post) => void;
 }
 
 function MessageItems({ messages, onClick }: MessageRowsProps) {

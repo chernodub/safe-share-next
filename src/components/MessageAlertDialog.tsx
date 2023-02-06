@@ -1,12 +1,12 @@
 import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Icon } from '@chakra-ui/react';
-import type { Message } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import { useCallback, useRef } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import { Date } from './shared/Date';
 
 interface MessageAlertDialogProps {
-  readonly message: Message;
+  readonly message: Post;
   readonly isOpen: boolean;
   readonly onClose: () => void;
   readonly onEdit: () => void;

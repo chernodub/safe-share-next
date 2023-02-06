@@ -23,27 +23,22 @@ const DELETE_MESSAGE_INPUT_SCHEME = z.object({
 const MESSAGE_SCHEME = z.object({
   content: z.string(),
 });
-export const messageRouter = createTRPCRouter({
+export const postRouter = createTRPCRouter({
   getPage: protectedProcedure
     .input(PAGE_SCHEMA)
-    .query(async ({ input, ctx: { session } }) => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return prisma.message.findMany({
-        ...mapPageInputPrismaQuery(input),
-        where: {
-          authorId: session.user.id,
-        },
-        orderBy: {
-          updatedAt: 'desc',
-        },
-      });
-    }),
+    .query(({ input, ctx: { session } }) => prisma.post.findMany({
+      ...mapPageInputPrismaQuery(input),
+      where: {
+        authorId: session.user.id,
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    })),
   create: protectedProcedure
     .input(MESSAGE_SCHEME)
-    .mutation(async ({ input, ctx: { session } }) => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-        return prisma.message.create({
+    .mutation(({ input, ctx: { session } }) =>
+      prisma.post.create({
           data: {
             text: input.content,
             author: {
@@ -51,24 +46,21 @@ export const messageRouter = createTRPCRouter({
                 id: session.user.id,
               },
             },
-          },
-        });
-      }),
+        },
+      })),
   edit: protectedProcedure
     .input(MESSAGE_SCHEME.extend({
       id: z.string(),
     }))
     .mutation(async ({ input, ctx: { session } }) => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-        await prisma.message.findFirstOrThrow({
+        await prisma.post.findFirstOrThrow({
           where: {
             id: input.id,
             authorId: session.user.id,
           },
         });
 
-        await prisma.message.update({
+        await prisma.post.update({
           data: {
             text: input.content,
           },
@@ -80,16 +72,14 @@ export const messageRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(DELETE_MESSAGE_INPUT_SCHEME)
     .mutation(async ({ input, ctx: { session } }) => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-        await prisma.message.findFirstOrThrow({
+        await prisma.post.findFirstOrThrow({
           where: {
             id: input.id,
             authorId: session.user.id,
           },
         });
 
-        return prisma.message.delete({
+        return prisma.post.delete({
           where: {
             id: input.id,
           },

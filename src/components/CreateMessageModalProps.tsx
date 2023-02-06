@@ -19,10 +19,10 @@ export function CreateMessageModal({ isOpen, onClose }: CreateMessageModalProps)
   const successToast = useSuccessToast({ title: 'Message created!' });
   const utils = api.useContext();
   const formId = useId();
-  const { mutate, isLoading } = api.message.create.useMutation({
+  const { mutate, isLoading } = api.post.create.useMutation({
     onSuccess() {
       loadingToast.closeAll();
-      void utils.message.getPage.invalidate();
+      void utils.post.getPage.invalidate();
       successToast();
     },
     onMutate: () => loadingToast(),

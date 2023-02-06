@@ -1,5 +1,5 @@
 import { Button, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
-import type { Message } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import { useCallback, useId } from 'react';
 
 import { MdSave } from 'react-icons/md';
@@ -13,7 +13,7 @@ import { Date } from './shared/Date';
 import { useLoadingToast, useSuccessToast } from './hooks/toastHooks';
 
 interface EditMessageModalProps {
-  readonly message: Message;
+  readonly message: Post;
   readonly isOpen: boolean;
   readonly onClose: () => void;
 }
@@ -23,13 +23,13 @@ export function EditMessageModal({ isOpen, onClose, message }: EditMessageModalP
   const successToast = useSuccessToast();
   const formId = useId();
   const utils = api.useContext();
-  const { mutate, isLoading } = api.message.edit.useMutation({
+  const { mutate, isLoading } = api.post.edit.useMutation({
     onSuccess() {
       loadingToast.closeAll();
       successToast({
         title: <>Message from <Date value={message.createdAt} /> was updated!</>,
       });
-      void utils.message.getPage.invalidate();
+      void utils.post.getPage.invalidate();
     },
     onMutate: () => loadingToast(),
   });
