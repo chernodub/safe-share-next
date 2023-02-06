@@ -19,7 +19,7 @@ export function MessageForm({ defaultValue, onSubmit, formId }: MessageFormProps
     <form onSubmit={handleSubmit(onSubmit)} id={formId}>
       <FormControl>
         <FormLabel>Message</FormLabel>
-        <Textarea {...register('content')} />
+        <Textarea {...register('content', { required: true })} />
       </FormControl>
     </form>
   );
