@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { prisma } from '../../db';
 
-import { createTRPCRouter, protectedProcedure } from '../trpc';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 const PAGE_SCHEMA = z.object({
   page: z.number().min(0),
@@ -24,6 +24,13 @@ const POST_SCHEME = z.object({
   content: z.string(),
 });
 export const postRouter = createTRPCRouter({
+  get: publicProcedure
+    .input(z.string())
+    .query(({ input }) => prisma.post.findFirstOrThrow({
+      where: {
+        id: input,
+      },
+    })),
   getPage: protectedProcedure
     .input(PAGE_SCHEMA)
     .query(({ input, ctx: { session } }) => prisma.post.findMany({
