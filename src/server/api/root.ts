@@ -1,5 +1,9 @@
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+
+import superjson from 'superjson';
+
 import { postRouter } from './routers/post';
-import { createTRPCRouter } from './trpc';
+import { createSSGContext, createTRPCRouter } from './trpc';
 
 /**
  * This is the primary router for your server.
@@ -8,6 +12,12 @@ import { createTRPCRouter } from './trpc';
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
+});
+
+export const ssgHelpers = createProxySSGHelpers({
+  router: appRouter,
+  transformer: superjson,
+  ctx: createSSGContext(),
 });
 
 // export type definition of API

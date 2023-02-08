@@ -45,6 +45,11 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => ({
 });
 
 /**
+ * Generates the context for requests made by the Next engine during SSG.
+ */
+export const createSSGContext = () => createInnerTRPCContext({ session: null });
+
+/**
  * This is the actual context you'll use in your router. It will be used to
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
