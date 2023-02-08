@@ -10,7 +10,7 @@ import type { PostFormValue } from './PostForm';
 import { PostForm } from './PostForm';
 
 import { useLoadingToast, useSuccessToast } from './hooks/toastHooks';
-import { Date } from './shared/Date';
+import { DateTime } from './shared/DateTime';
 
 interface EditPostModalProps {
   readonly post: Post;
@@ -27,7 +27,7 @@ export function EditPostModal({ isOpen, onClose, post }: EditPostModalProps) {
     onSuccess() {
       loadingToast.closeAll();
       successToast({
-        title: <>Post from <Date value={post.updatedAt} /> was updated!</>,
+        title: <>Post from <DateTime value={post.updatedAt} /> was updated!</>,
       });
       void utils.post.getPage.invalidate();
     },
@@ -48,7 +48,7 @@ export function EditPostModal({ isOpen, onClose, post }: EditPostModalProps) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          Edit Post from <Date value={post.updatedAt}/>
+          Edit Post from <DateTime value={post.updatedAt}/>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>

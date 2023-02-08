@@ -14,7 +14,7 @@ import { CreatePostModal } from './CreatePostModalProps';
 import { EditPostModal } from './EditPostModal';
 
 import { PostAlertDialog } from './PostAlertDialog';
-import { Date } from './shared/Date';
+import { DateTime } from './shared/DateTime';
 
 import { useLoadingToast, useSuccessToast } from './hooks/toastHooks';
 
@@ -27,7 +27,7 @@ function useDeleteMutation() {
     onSuccess(removedPost) {
       loadingToast.closeAll();
       successToast({
-        title: <>Post from <Date value={removedPost.updatedAt} /> was removed!</>,
+        title: <>Post from <DateTime value={removedPost.updatedAt} /> was removed!</>,
       });
       void utils.post.getPage.invalidate();
     },
@@ -96,7 +96,7 @@ function PostItems({ posts, onClick }: PostRowsProps) {
     <>
       {posts.map(post => (
         <PostItem key={post.id} onClick={() => onClick(post)}>
-          <Date value={post.updatedAt} />
+          <DateTime value={post.updatedAt} />
         </PostItem>
       ))}
     </>

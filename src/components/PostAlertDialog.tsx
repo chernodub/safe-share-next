@@ -3,7 +3,7 @@ import type { Post } from '@prisma/client';
 import { useCallback, useRef } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 
-import { Date } from './shared/Date';
+import { DateTime } from './shared/DateTime';
 
 interface PostAlertDialogProps {
   readonly post: Post;
@@ -29,7 +29,7 @@ export function PostAlertDialog({ post, isOpen, onClose, onEdit, onDelete }: Pos
         <AlertDialogContent>
           <AlertDialogCloseButton />
           <AlertDialogHeader>
-            <Date value={post.updatedAt} />
+            <DateTime value={post.updatedAt} />
           </AlertDialogHeader>
 
           <AlertDialogBody>
