@@ -1,9 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import type { Post } from '@prisma/client';
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { Suspense } from 'react';
 
-import { serialize, deserialize } from 'superjson';
+import { deserialize, serialize } from 'superjson';
 
 import { Header } from '../../components/Header';
 import { DateTime } from '../../components/shared/DateTime';
