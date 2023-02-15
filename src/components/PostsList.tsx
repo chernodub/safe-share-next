@@ -10,7 +10,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import { api } from '../utils/api';
 
-import { CreatePostModal } from './CreatePostModalProps';
+import { CreatePostModal } from './CreatePostModal';
 import { EditPostModal } from './EditPostModal';
 
 import { PostAlertDialog } from './PostAlertDialog';
