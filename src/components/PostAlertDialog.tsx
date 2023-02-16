@@ -34,7 +34,7 @@ interface PostAlertDialogProps {
 export function PostAlertDialog({ post, isOpen, onClose, onEdit, onDelete }: PostAlertDialogProps) {
   const postUrl = usePostUrl(post);
   const successToast = useSuccessToast({
-    title: 'Toast URL was copied to clipboard!',
+    title: 'Post URL was copied to clipboard!',
   });
   const ref = useRef(null);
 
