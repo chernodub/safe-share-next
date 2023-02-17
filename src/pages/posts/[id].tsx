@@ -9,6 +9,8 @@ import { DateTime } from '../../components/shared/DateTime';
 
 import { ssgHelpers } from '../../server/api/root';
 
+type FullPost = Awaited<ReturnType<typeof ssgHelpers.post.get.fetch>>;
+
 export async function getServerSideProps({ params }: GetServerSidePropsContext<{ id: string; }>) {
   const id = params?.id;
 
@@ -28,7 +30,7 @@ export async function getServerSideProps({ params }: GetServerSidePropsContext<{
 }
 
 export default function PostPage({ serializedPost }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const post = deserialize<Post>(serializedPost);
+  const post = deserialize<FullPost>(serializedPost);
 
   return (
     <>
@@ -39,7 +41,9 @@ export default function PostPage({ serializedPost }: InferGetServerSidePropsType
 
           <p>{post.text}</p>
 
-          <DateTime value={post.createdAt} ></DateTime>
+          <p>
+            Created at <DateTime value={post.createdAt}></DateTime> by <Text fontWeight="bold">{post.author.name}</Text>
+          </p>
         </Flex>
       </main>
     </>

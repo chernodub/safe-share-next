@@ -30,6 +30,9 @@ export const postRouter = createTRPCRouter({
       where: {
         id: input,
       },
+      include: {
+        author: true,
+      },
     })),
   getPage: protectedProcedure
     .input(PAGE_SCHEMA)
