@@ -1,12 +1,14 @@
-import { Button, Icon, useColorMode } from '@chakra-ui/react';
+import { Icon, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
+import { AppIconButton } from './AppIconButton';
+
 export function ThemeToggle() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
+  const ThemeIcon = useColorModeValue(MdLightMode, MdDarkMode);
+  const label = useColorModeValue('Toggle to dark mode', 'Toggle to light mode');
 
   return (
-    <Button p={0} variant="ghost" borderRadius="full" onClick={toggleColorMode}>
-      <Icon w={6} h={6} as={colorMode === 'dark' ? MdDarkMode : MdLightMode} />
-    </Button>
+    <AppIconButton icon={<Icon as={ThemeIcon} w={6} h={6}/>} label={label} onClick={toggleColorMode}></AppIconButton>
   );
 }

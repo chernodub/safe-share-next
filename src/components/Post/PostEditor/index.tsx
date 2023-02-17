@@ -20,7 +20,7 @@ import { MdHelp } from 'react-icons/md';
 
 import { lexicalEditorConfig } from '../config';
 
-import { IconButton } from './IconButton';
+import { AppIconButton } from '../../AppIconButton';
 
 function Editable({ py = 0, px = 0 }: { py?: number; px?: number; }) {
   return (
@@ -104,7 +104,7 @@ function ShortcutHelperPlugin({ ...spaceProps }: ChakraSpaceProps) {
       <Popover>
         <PopoverTrigger >
           <Box right={0} top={0} pos="absolute" {...spaceProps}>
-            <IconButton IconType={MdHelp}></IconButton>
+            <AppIconButton icon={<MdHelp />} label="Show shortcuts" ></AppIconButton>
           </Box>
         </PopoverTrigger>
         <PopoverContent>
