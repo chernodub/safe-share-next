@@ -1,5 +1,6 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import type { PropsWithChildren } from 'react';
 
 import { ThemeToggle } from './ThemeToggle';
@@ -18,7 +19,9 @@ function HeaderLayout({ children }: PropsWithChildren) {
   return (
     <header>
       <Flex py={2} px={6} justifyContent="space-between" alignItems="center">
-        <h1>SafeShare</h1>
+        <Link href="/">
+          <Text fontWeight="bold">SafeShare</Text>
+        </Link>
 
         <Flex alignItems="center" gap={2}>
           <ThemeToggle />
