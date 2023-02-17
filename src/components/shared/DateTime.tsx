@@ -10,7 +10,7 @@ export function DateTime({ value, locale = 'en' }: DateProps) {
    * is causing issues when running app in SSR mode.
    * This will automatically be fixed when Chrome ships 110 (which brings new ICU that is in sync with Node 18.13+).
    */
-  const time = `${value.getHours()}:${value.getMinutes()}`;
+  const time = `${formatTimePart(value.getHours())}:${formatTimePart(value.getMinutes())}`;
   const date = value.toLocaleDateString(locale);
 
   return (
@@ -19,3 +19,5 @@ export function DateTime({ value, locale = 'en' }: DateProps) {
     </>
   );
 }
+
+const formatTimePart = (time: number) => time.toString().padStart(2, '0');
