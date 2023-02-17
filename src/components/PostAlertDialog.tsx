@@ -5,6 +5,7 @@ import { } from 'react-dom';
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import { useSuccessToast } from './hooks/toastHooks';
+import { PostContent } from './Post/PostContent';
 import { DateTime } from './shared/DateTime';
 import { ShareLinkButton } from './ShareLinkButton';
 
@@ -60,7 +61,7 @@ export function PostAlertDialog({ post, isOpen, onClose, onEdit, onDelete }: Pos
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            {post.text}
+            <PostContent post={post} />
           </AlertDialogBody>
 
           <AlertDialogFooter gap={3}>

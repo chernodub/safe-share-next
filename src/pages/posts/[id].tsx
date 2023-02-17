@@ -1,10 +1,10 @@
-import { Flex } from '@chakra-ui/react';
-import type { Post } from '@prisma/client';
+import { Flex, Text } from '@chakra-ui/react';
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 
 import { deserialize, serialize } from 'superjson';
 
 import { Header } from '../../components/Header';
+import { PostContent } from '../../components/Post/PostContent';
 import { DateTime } from '../../components/shared/DateTime';
 
 import { ssgHelpers } from '../../server/api/root';
@@ -39,11 +39,11 @@ export default function PostPage({ serializedPost }: InferGetServerSidePropsType
       <main>
         <Flex p={6} flexDir="column" gap={6}>
 
-          <p>{post.text}</p>
+          <PostContent post={post} />
 
-          <p>
-            Created at <DateTime value={post.createdAt}></DateTime> by <Text fontWeight="bold">{post.author.name}</Text>
-          </p>
+          <div>
+            Created at <DateTime value={post.createdAt}></DateTime> by <Text as="span" fontWeight="bold">{post.author.name}</Text>
+          </div>
         </Flex>
       </main>
     </>

@@ -1,5 +1,7 @@
-import { FormControl, FormLabel, Textarea } from '@chakra-ui/react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
+
+import { PostEditor } from './Post/PostEditor';
 
 export interface PostFormValue {
   readonly content: string;
@@ -12,7 +14,7 @@ interface PostFormProps {
 }
 
 export function PostForm({ defaultValue, onSubmit, formId }: PostFormProps) {
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, setValue } = useForm({
     defaultValues: defaultValue,
   });
 
@@ -20,7 +22,7 @@ export function PostForm({ defaultValue, onSubmit, formId }: PostFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} id={formId}>
       <FormControl>
         <FormLabel>Post Content</FormLabel>
-        <Textarea {...register('content', { required: true })} />
+        <PostEditor value={defaultValue.content} onChange={value => setValue('content', value)} />
       </FormControl>
     </form>
   );
