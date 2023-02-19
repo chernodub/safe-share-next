@@ -1,28 +1,18 @@
 import { type NextPage } from 'next';
-import { signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
 
 import { PostsList } from '../components/PostsList';
 import { PageLayout } from '../layouts/PageLayout';
 
-const Home: NextPage = () => {
-  const session = useSession();
+import { GuardedSessionProvider } from '../components/SessionGuardedPage';
 
-  if (session.status === 'unauthenticated') {
-    void signIn();
-    return null;
-  }
-
-  if (session.status === 'loading') {
-    return <p>Loading...</p>;
-  }
-
-  return (
+const Home: NextPage = () => (
+  <GuardedSessionProvider loader={<p>Loading...</p>}>
     <PageLayout head={<HomeHead/>}>
       <PostsList />
     </PageLayout>
-  );
-};
+  </GuardedSessionProvider>
+);
 
 function HomeHead() {
   return (
