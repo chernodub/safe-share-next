@@ -2,9 +2,8 @@ import { type NextPage } from 'next';
 import { signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
 
-import { Header } from '../components/Header';
 import { PostsList } from '../components/PostsList';
-import { PageLayout } from '../components/PageLayout';
+import { PageLayout } from '../layouts/PageLayout';
 
 const Home: NextPage = () => {
   const session = useSession();
@@ -19,20 +18,20 @@ const Home: NextPage = () => {
   }
 
   return (
-    <>
-      <Head>
-        <title>SafeShare</title>
-        <meta name="description" content="Simple app for sharing credentials" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Header/>
-
-      <PageLayout>
-        <PostsList />
-      </PageLayout>
-    </>
+    <PageLayout head={<HomeHead/>}>
+      <PostsList />
+    </PageLayout>
   );
 };
+
+function HomeHead() {
+  return (
+    <Head>
+      <title>SafeShare</title>
+      <meta name="description" content="Simple app for sharing credentials" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+  );
+}
 
 export default Home;

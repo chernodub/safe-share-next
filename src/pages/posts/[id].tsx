@@ -1,9 +1,10 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 
 import { deserialize, serialize } from 'superjson';
 
-import { Header } from '../../components/Header';
+import { PageLayout } from '../../layouts/PageLayout';
+
 import { PostContent } from '../../components/Post/PostContent';
 import { DateTime } from '../../components/shared/DateTime';
 
@@ -33,19 +34,12 @@ export default function PostPage({ serializedPost }: InferGetServerSidePropsType
   const post = deserialize<FullPost>(serializedPost);
 
   return (
-    <>
-      <Header></Header>
+    <PageLayout>
+      <PostContent post={post} />
 
-      <main>
-        <Flex p={6} flexDir="column" gap={6} maxW="container.lg" mx={{ xl: '20%' }}>
-
-          <PostContent post={post} />
-
-          <div>
-            Created at <DateTime value={post.createdAt}></DateTime> by <Text as="span" fontWeight="bold">{post.author.name}</Text>
-          </div>
-        </Flex>
-      </main>
-    </>
+      <div>
+        Created at <DateTime value={post.createdAt}></DateTime> by <Text as="span" fontWeight="bold">{post.author.name}</Text>
+      </div>
+    </PageLayout>
   );
 }
