@@ -8,9 +8,10 @@ import type { Post } from '@prisma/client';
 
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
+import Link from 'next/link';
+
 import { api } from '../utils/api';
 
-import { CreatePostModal } from './CreatePostModal';
 import { EditPostModal } from './EditPostModal';
 
 import { PostAlertDialog } from './PostAlertDialog';
@@ -40,7 +41,6 @@ export function PostsList() {
   const { data: posts } = api.post.getPage.useQuery({ page: 0, pageSize: 10 });
   const [selectedPostId, setCurrentPostId] = useState<string | null>(null);
   const selectedPost = posts?.find(post => post.id === selectedPostId) ?? null;
-  const createModal = useDisclosure();
   const editModal = useDisclosure();
   const handlePostClick = useCallback(({ id }: Post) => setCurrentPostId(id), []);
   const deletePost = useDeleteMutation();
@@ -57,7 +57,9 @@ export function PostsList() {
       <header>
         <Flex p={3} justifyContent="space-between" alignItems="center">
           <Heading size="md">Your Posts</Heading>
-          <Button leftIcon={<Icon as={MdAdd}/>} onClick={createModal.onOpen}>New Post</Button>
+          <Link href="/posts/create">
+            <Button as="div" leftIcon={<Icon as={MdAdd}/>}>New Post</Button>
+          </Link>
         </Flex>
       </header>
 
@@ -77,7 +79,6 @@ export function PostsList() {
             onDelete={handleDelete}
           />
       }
-      <CreatePostModal isOpen={createModal.isOpen} onClose={createModal.onClose} />
       {
         selectedPost &&
           <EditPostModal isOpen={editModal.isOpen} onClose={editModal.onClose} post={selectedPost} />
