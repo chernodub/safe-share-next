@@ -9,9 +9,15 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 import { lexicalEditorConfig } from './config';
 import { PrefillEditorStatePlugin } from './PostEditor';
+import { getLexicalTheme } from './config/baseLexicalTheme';
+import styles from './PostContent.module.css';
 
 const editorConfig: InitialConfigType = {
   ...lexicalEditorConfig,
+  theme: getLexicalTheme({
+    root: styles.root,
+    paragraph: styles.p,
+  }),
   editable: false,
 };
 

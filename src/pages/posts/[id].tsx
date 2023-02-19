@@ -37,7 +37,7 @@ export default function PostPage({ serializedPost }: InferGetServerSidePropsType
       <Header></Header>
 
       <main>
-        <Flex p={6} flexDir="column" gap={6}>
+        <Flex p={6} flexDir="column" gap={6} maxW="container.lg" mx={{ xl: '20%' }}>
 
           <PostContent post={post} />
 

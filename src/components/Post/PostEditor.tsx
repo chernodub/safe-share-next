@@ -18,9 +18,9 @@ import type { ChakraProps } from '@chakra-ui/react';
 import { Box, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, Text, useColorModeValue } from '@chakra-ui/react';
 import { MdHelp } from 'react-icons/md';
 
-import { lexicalEditorConfig } from '../config';
+import { AppIconButton } from '../AppIconButton';
 
-import { AppIconButton } from '../../AppIconButton';
+import { lexicalEditorConfig } from './config';
 
 function Editable({ py = 0, px = 0 }: { py?: number; px?: number; }) {
   return (

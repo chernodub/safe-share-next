@@ -1,0 +1,36 @@
+/* Text formats */
+.textBold {
+  font-weight: bold;
+}
+
+.textItalic {
+  font-style: italic;
+}
+
+.textUnderline {
+  text-decoration: underline;
+}
+
+/* Headings */
+.h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+}
+
+.h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+}
+
+.h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+}
+
+.link {
+  font-weight: 500;
+  color: var(--chakra-colors-white-500);
+}

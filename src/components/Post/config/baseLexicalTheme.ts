@@ -1,8 +1,9 @@
+import type { DeepPartial } from '@chakra-ui/react';
 import type { EditorThemeClasses } from 'lexical';
 
-import styles from './lexicalEditorTheme.module.css';
+import styles from './baseLexicalTheme.module.css';
 
-export const lexicalEditorTheme: EditorThemeClasses = {
+const baseLexicalEditorTheme: EditorThemeClasses = {
   root: 'unspecified',
   placeholder: 'unspecified',
   paragraph: 'unspecified',
@@ -27,7 +28,7 @@ export const lexicalEditorTheme: EditorThemeClasses = {
   },
   hashtag: 'unspecified',
   image: 'unspecified',
-  link: 'unspecified',
+  link: styles.link,
   text: {
     bold: styles.textBold,
     code: 'unspecified',
@@ -72,3 +73,30 @@ export const lexicalEditorTheme: EditorThemeClasses = {
     'variable': 'unspecified',
   },
 };
+
+export function getLexicalTheme(overrides: DeepPartial<EditorThemeClasses> = {}): EditorThemeClasses {
+  return overrideProperties(overrides, baseLexicalEditorTheme);
+}
+
+function overrideProperties<TOverrides extends object, TBase extends TOverrides>(
+  overrides: TOverrides,
+  base: TBase,
+): TBase {
+  const baseClone = structuredClone(base);
+
+  // To keep this easy to read
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
+  (Object.entries(overrides) as [keyof TOverrides, any][]).forEach(([key, value]) => {
+    if (typeof value === 'object') {
+      baseClone[key] = overrideProperties(value, baseClone[key]);
+    } else {
+      baseClone[key] = value;
+    }
+  });
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment */
+
+  return {
+    ...base,
+    ...overrides,
+  };
+}
